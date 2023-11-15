@@ -7,6 +7,29 @@ import groupService from "../services/group.service";
 class UserController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
+      if (req.user.role !== "superadmin") {
+        return res.status(403).json({
+          message: "Only users with role superadmin can create users",
+        });
+      }
+
+      // Validaciones
+      const { name, email, password, role } = req.body;
+
+      if (!name || !email || !password || !role) {
+        return res.status(400).json({
+          message: "Missing required parameters",
+        });
+      } else if (!isValidEmail(email)) {
+        return res.status(400).json({
+          message: "Invalid email format",
+        });
+      } else if (!(role === "superadmin") || !(role === "user")) {
+        return res.status(400).json({
+          message: "Role must be 'superadmin' or 'user'",
+        });
+      }
+
       const userExists: UserDocument | null = await userService.findByEmail(
         req.body.email
       );
@@ -131,6 +154,10 @@ class UserController {
       res.status(500).json(error);
     }
   }
+}
+
+function isValidEmail(email: string): boolean {
+  return /\S+@\S+\.\S+/.test(email);
 }
 
 export default new UserController();

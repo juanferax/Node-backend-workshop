@@ -79,7 +79,7 @@ class UserService {
   public async generateToken(user: UserDocument): Promise<String> {
     try {
       const token = await jwt.sign(
-        { user_id: user.id, email: user.email },
+        { user_id: user.id, email: user.email, role: user.role },
         process.env.JWT_SECRET || "D3jP#Qr!sT*uXwZ8yA@v",
         { expiresIn: "5m" }
       );

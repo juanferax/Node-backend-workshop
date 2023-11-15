@@ -1,6 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+declare module "express" {
+  interface Request {
+    user?: any;
+  }
+}
+
 export const authenticate = (
   req: Request,
   res: Response,
@@ -21,6 +27,8 @@ export const authenticate = (
       process.env.JWT_SECRET || "D3jP#Qr!sT*uXwZ8yA@v"
     );
 
+    // Agrega la información del usuario al objeto de solicitud
+    req.user = decoded;
     next();
   } catch (error) {
     return res.status(401).json({ message: "Unauthorized: Invalid token" });
