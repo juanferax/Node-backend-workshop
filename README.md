@@ -7,6 +7,8 @@ CRUD (Crear, Leer, Actualizar, Eliminar) en usuarios y grupos, manejar la autent
 usuarios, y permitir la asociación entre usuarios y grupos, así como la consulta de dichas
 asociaciones. Sólo los usuarios con rol de superadmin pueden crear usuarios.
 
+En el siguiente enlace podrá encontrar un video demostrando el funcionamiento de la aplicación: https://drive.google.com/file/d/1a-XRFHkMfN1wGGalGHkU6AuIwISri1h5/view?usp=sharing
+
 ## Configuración y Ejecución del proyecto
 1. Clonar el proyecto con `git clone https://github.com/juanferax/Node-backend-workshop`
 2. Asegurarse de tener MongoDB instalado en tu equipo, en caso de querer usar un servidor mongo externo modificar el archivo `/config/connect.ts` con la URI de su base de datos.
