@@ -11,7 +11,7 @@ const connectionString =
 
 const createSuperadmin = async () => {
   try {
-    const userExists = userService.findByEmail("admin@admin.com");
+    const userExists = await userService.findByEmail("admin@admin.com");
 
     if (!userExists) {
       const superadmin = {
@@ -21,11 +21,19 @@ const createSuperadmin = async () => {
         role: "superadmin",
       };
 
-      await userService.create(superadmin as UserInput);
+      const user = {
+        name: "Test",
+        email: "test@test.com",
+        password: await bcrypt.hash("password", 10),
+        role: "user",
+      };
 
-      console.log("Usuario superadmin iniciado correctamente");
+      await userService.create(superadmin as UserInput);
+      await userService.create(user as UserInput);
+
+      console.log("Usuarios iniciales creados correctamente");
     } else {
-      console.log("El usuario superadmin ya existe en la base de datos.");
+      console.log("Datos ya cargados en la base de datos");
     }
   } catch (error) {
     console.error("Error al cargar el usuario superadmin:", error);

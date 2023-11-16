@@ -24,7 +24,7 @@ class UserController {
         return res.status(400).json({
           message: "Invalid email format",
         });
-      } else if (!(role === "superadmin") || !(role === "user")) {
+      } else if (role !== "superadmin" && role !== "user") {
         return res.status(400).json({
           message: "Role must be 'superadmin' or 'user'",
         });
